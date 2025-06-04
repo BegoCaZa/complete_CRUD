@@ -56,17 +56,32 @@ usersController.updateUsersById = async (req, res) => {
     console.log('Usuario actualizado:', updatedUserComplete);
   } catch (err) {
     // junto los errores
-    console.error('Error en updateUsersById:', err);
+
     res.status(500).send('Error al procesar la solicitud');
   }
 };
 
 //DELETE
-// usersController.deleteUsersById = async (req, res) => {
-//   const userId = req.params.id;
+usersController.deleteUsersById = async (req, res) => {
+  const userId = req.params.id;
 
-//   try {
-//     const data = await fs.readFile(usersFilePath, 'utf8');
-//     const jsonData = JSON.parse(data);
+  try {
+    const data = await fs.readFile(usersFilePath);
+    const jsonData = JSON.parse(data);
+
+    // encuentra el id
+    const foundUser = jsonData.find(user => user.userId === userId);
+    if (!foundUser) return res.status(404).send('Usuario no encontrado');
+    // filtra el usuario
+    const updatedJsonData = jsonData.filter(user => user.userId !== userId);
+
+    //escribir con promesas
+    await fs.writeFile(usersFilePath, JSON.stringify(updatedJsonData));
+    res.send({ message: 'Usuario eliminado correctamente' });
+  } catch (err) {
+    // junto los errores
+    res.status(500).send('Error al procesar la solicitud');
+  }
+};
 
 module.exports = usersController;

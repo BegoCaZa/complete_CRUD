@@ -6,5 +6,6 @@ const usersRouter = express.Router();
 //la ruta para obtener la informacion
 usersRouter.get('/', usersController.readAllUsers);
 usersRouter.patch('/:id', usersController.updateUsersById);
+usersRouter.delete('/:id', usersController.deleteUsersById);
 
 module.exports = usersRouter;
