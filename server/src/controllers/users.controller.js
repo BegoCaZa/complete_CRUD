@@ -8,13 +8,15 @@ const usersController = {};
 const usersFilePath = path.resolve(__dirname, '../../data/users.json');
 
 //READ creo un método readAllUsers y meto la promesa
-usersController.readAllUsers = (req, res) => {
-  fs.readFile(usersFilePath, (err, data) => {
-    if (err) return res.status(500).send('Error al leer el archivo');
-
+usersController.readAllUsers = async (req, res) => {
+  try {
+    const data = await fs.readFile(usersFilePath);
     const jsonData = JSON.parse(data);
     res.send(jsonData);
-  });
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+    res.status(500).send('Error al leer el archivo');
+  }
 };
 
 //UPDATE
