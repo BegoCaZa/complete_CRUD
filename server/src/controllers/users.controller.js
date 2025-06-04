@@ -18,42 +18,55 @@ usersController.readAllUsers = (req, res) => {
 };
 
 //UPDATE
-usersController.updateUsersById = (req, res) => {
+usersController.updateUsersById = async (req, res) => {
   const userId = req.params.id;
   const updatedUser = req.body;
 
-  fs.readFile(usersFilePath, (err, data) => {
-    if (err) return res.status(500).send('Error al leer el archivo');
-
+  try {
+    const data = await fs.readFile(usersFilePath);
     const jsonData = JSON.parse(data);
 
-    const foundUser = jsonData.find(user => user.userId === userId); //lo encuentra por su id
+    // encuentra el id
+    const foundUser = jsonData.find(user => user.userId === userId);
     if (!foundUser) return res.status(404).send('Usuario no encontrado');
 
-    //mo repetir email
+    //verifica el email
     const existingEmail = jsonData.find(
       user => user.email === updatedUser.email && user.userId !== userId
     );
     if (existingEmail) return res.status(409).send('El email ya está en uso');
 
-    //creo un nuevo objeto con los datos actualizados
     const updatedJsonData = jsonData.map(user => {
       if (user.userId === userId) {
         return {
           ...user,
-          ...updatedUser //actualizo los datos del usuario
+          ...updatedUser
         };
       }
-      return user; //si no coicide,devuelvo el usuario sin cambios
+      return user;
     });
-    fs.writeFile(usersFilePath, JSON.stringify(updatedJsonData), err => {
-      if (err) return res.status(500).send('Error al escribir en el archivo');
 
-      res.send(updatedUser);
-      console.log('Usuario actualizado:', updatedUser);
-      //mando solo ese usuario actualizado
-    });
-  });
+    //escribir con promesas
+    await fs.writeFile(usersFilePath, JSON.stringify(updatedJsonData));
+
+    const updatedUserComplete = updatedJsonData.find(
+      user => user.userId === userId
+    );
+    res.send(updatedUserComplete);
+    console.log('Usuario actualizado:', updatedUserComplete);
+  } catch (err) {
+    // junto los errores
+    console.error('Error en updateUsersById:', err);
+    res.status(500).send('Error al procesar la solicitud');
+  }
 };
+
+//DELETE
+// usersController.deleteUsersById = async (req, res) => {
+//   const userId = req.params.id;
+
+//   try {
+//     const data = await fs.readFile(usersFilePath, 'utf8');
+//     const jsonData = JSON.parse(data);
 
 module.exports = usersController;
