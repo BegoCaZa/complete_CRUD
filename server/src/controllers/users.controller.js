@@ -27,12 +27,12 @@ usersController.updateUsersById = (req, res) => {
 
     const jsonData = JSON.parse(data);
 
-    const foundUser = jsonData.find(user => user.userId); //lo encuentra por su id
+    const foundUser = jsonData.find(user => user.userId === userId); //lo encuentra por su id
     if (!foundUser) return res.status(404).send('Usuario no encontrado');
 
     //mo repetir email
     const existingEmail = jsonData.find(
-      user => user.email === updatedUser.email && user.id !== userId
+      user => user.email === updatedUser.email && user.userId !== userId
     );
     if (existingEmail) return res.status(409).send('El email ya está en uso');
 
