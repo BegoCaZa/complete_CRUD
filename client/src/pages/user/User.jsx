@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
 	StyledActiveState,
 	StyledActiveText,
+	StyledBackButton,
 	StyledDetail,
 	StyledDot,
 	StyledGeneralContainer,
@@ -13,7 +14,10 @@ import {
 	StyledUserDataItem,
 	StyledUserDetails,
 	StyledUserInfoContainer,
-	StyledUserName
+	StyledUserName,
+	StyledEditingButtons,
+	StyledDeleteButton,
+	StyledEditButton
 } from './user.styles';
 
 const User = () => {
@@ -27,7 +31,7 @@ const User = () => {
 	return (
 		<StyledGeneralContainer>
 			<StyledUserCard key={user.userId}>
-				<button>BACK TO USERS</button>
+				<StyledBackButton to={`/`}>BACK TO USERS</StyledBackButton>
 				<StyledImageFrame>
 					<img src={user.profilePicture} />
 				</StyledImageFrame>
@@ -56,6 +60,10 @@ const User = () => {
 						<StyledUserData>{user.phoneNumber}</StyledUserData>
 					</StyledDetail>
 				</StyledUserDetails>
+				<StyledEditingButtons>
+					<StyledEditButton>EDIT</StyledEditButton>
+					<StyledDeleteButton>DELETE</StyledDeleteButton>
+				</StyledEditingButtons>
 			</StyledUserCard>
 		</StyledGeneralContainer>
 	);

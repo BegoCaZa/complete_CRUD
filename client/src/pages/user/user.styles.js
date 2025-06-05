@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '../../styles/colors';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const StyledGeneralContainer = styled.div`
 	display: flex;
@@ -59,12 +59,15 @@ export const StyledUserDetails = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
+	gap: 10px;
+	margin-bottom: 20px;
 `;
 
 export const StyledDetail = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	gap: 10px;
 `;
 
 export const StyledActiveState = styled.div`
@@ -86,4 +89,67 @@ export const StyledActiveText = styled.span`
 	color: ${({ $active }) => ($active ? COLORS.green : COLORS.red)};
 	font-size: 18px;
 	font-weight: 500;
+`;
+
+export const StyledBackButton = styled(Link)`
+	appearance: none;
+	background-color: transparent;
+	padding: 8px 16px;
+	border: 1.5px solid ${COLORS.blue};
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	color: ${COLORS.blue};
+	align-self: flex-start;
+	margin-bottom: 20px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: ${COLORS.blue};
+		color: ${COLORS.white};
+	}
+`;
+
+export const StyledEditingButtons = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	width: 100%;
+	margin-bottom: 20px;
+`;
+
+export const StyledEditButton = styled.button`
+	appearance: none;
+	background-color: transparent;
+	padding: 8px 16px;
+	border: 1.5px solid ${COLORS.blue};
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	color: ${COLORS.blue};
+	cursor: pointer;
+
+	&:hover {
+		background-color: ${COLORS.blue};
+		color: ${COLORS.white};
+	}
+`;
+
+export const StyledDeleteButton = styled.button`
+	appearance: none;
+	background-color: transparent;
+	padding: 8px 16px;
+	border: 1.5px solid ${COLORS.red};
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	color: ${COLORS.red};
+	cursor: pointer;
+
+	&:hover {
+		background-color: ${COLORS.red};
+		color: ${COLORS.white};
+	}
 `;
