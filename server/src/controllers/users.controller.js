@@ -19,6 +19,25 @@ usersController.readAllUsers = async (req, res) => {
   }
 };
 
+//get user by id
+usersController.getUserById = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  try {
+    const data = await fs.readFile(usersFilePath);
+    const jsonData = JSON.parse(data);
+
+    // encuentra el id
+    const foundUser = jsonData.find(user => user.userId === userId);
+    if (!foundUser) return res.status(404).send('Usuario no encontrado');
+    res.send(foundUser);
+  } catch (err) {
+    console.log('Error al leer el archivo:', err);
+    res.status(500).send('Error al leer el archivo');
+  }
+};
+
 //UPDATE
 usersController.updateUsersById = async (req, res) => {
   const userId = req.params.id;

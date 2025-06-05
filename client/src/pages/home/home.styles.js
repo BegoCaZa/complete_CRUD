@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '../../styles/colors';
+import { Link } from 'react-router-dom';
 
 export const StyledGeneralCardsContainer = styled.div`
 	display: flex;
@@ -71,7 +72,7 @@ export const StyledActiveText = styled.span`
 	font-weight: 500;
 `;
 
-export const StyledDetailsButton = styled.button`
+export const StyledDetailsButton = styled(Link)`
 	appearance: none;
 	background-color: transparent;
 	padding: 8px 16px;

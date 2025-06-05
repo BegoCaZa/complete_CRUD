@@ -29,14 +29,16 @@ const Home = () => {
 					<StyledUserInfoContainer>
 						<StyledUserName>{user.fullName}</StyledUserName>
 						<StyledUserDataItem>{user.email}</StyledUserDataItem>
-						<StyledUserDataItem>{user.username}</StyledUserDataItem>
+						<StyledUserDataItem>@{user.username}</StyledUserDataItem>
 						<StyledActiveState>
 							<StyledDot $active={user.active} />
 							<StyledActiveText $active={user.active}>
 								{user.active ? 'Active' : 'Inactive'}
 							</StyledActiveText>
 						</StyledActiveState>
-						<StyledDetailsButton>DETAILS</StyledDetailsButton>
+						<StyledDetailsButton to={`/user/${user.userId}`}>
+							DETAILS
+						</StyledDetailsButton>
 					</StyledUserInfoContainer>
 				</StyledUserCard>
 			))}
