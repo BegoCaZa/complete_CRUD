@@ -1,12 +1,25 @@
 import { useForm } from 'react-hook-form';
 import {
+	StyledButtonContainer,
+	StyledCancelButton,
 	StyledCheckbox,
+	StyledErrorMessage,
+	StyledForm,
+	StyledInput,
 	StyledInputContainer,
-	StyledLabel
+	StyledLabel,
+	StyledSaveButton
 } from './editingPage.styles';
+import { FORM_VALIDATIONS } from '../../constants/form_validation';
 
 const EditingPage = ({ user, setUser, setEditingPage, userId }) => {
-	const { register } = useForm({
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue
+		//el setValue para que?
+	} = useForm({
 		defaultValues: {
 			fullName: user.fullName,
 			email: user.email,
@@ -15,15 +28,77 @@ const EditingPage = ({ user, setUser, setEditingPage, userId }) => {
 			active: user.active
 		}
 	});
+
+	const onSubmit = data => {
+		console.log(data);
+		//guarda pero no actualiza el api
+	};
+
+	const handleCancel = () => {
+		setEditingPage(false);
+		//regresa
+	};
+
 	return (
-		<form>
+		<StyledForm onSubmit={handleSubmit(onSubmit)}>
 			<StyledInputContainer>
 				<StyledLabel>
 					<StyledCheckbox type='checkbox' {...register('active')} />
 					Active
 				</StyledLabel>
 			</StyledInputContainer>
-		</form>
+
+			<StyledInputContainer>
+				<StyledLabel>Name</StyledLabel>
+				<StyledInput
+					type='text'
+					{...register('fullName', FORM_VALIDATIONS.FULL_NAME)}
+				/>
+				{errors.fullName && (
+					<StyledErrorMessage>{errors.fullName.message}</StyledErrorMessage>
+				)}
+			</StyledInputContainer>
+
+			<StyledInputContainer>
+				<StyledLabel>Email</StyledLabel>
+				<StyledInput
+					type='text'
+					{...register('email', FORM_VALIDATIONS.EMAIL)}
+				/>
+				{errors.email && (
+					<StyledErrorMessage>{errors.email.message}</StyledErrorMessage>
+				)}
+			</StyledInputContainer>
+
+			<StyledInputContainer>
+				<StyledLabel>Date of Birth</StyledLabel>
+				<StyledInput
+					type='date'
+					{...register('dateOfBirth', FORM_VALIDATIONS.DATE_OF_BIRTH)}
+				/>
+				{errors.dateOfBirth && (
+					<StyledErrorMessage>{errors.dateOfBirth.message}</StyledErrorMessage>
+				)}
+			</StyledInputContainer>
+
+			<StyledInputContainer>
+				<StyledLabel>Phone</StyledLabel>
+				<StyledInput
+					type='text'
+					{...register('phoneNumber', FORM_VALIDATIONS.PHONE_NUMBER)}
+				/>
+				{errors.phoneNumber && (
+					<StyledErrorMessage>{errors.phoneNumber.message}</StyledErrorMessage>
+				)}
+			</StyledInputContainer>
+
+			<StyledButtonContainer>
+				<StyledSaveButton type='submit'>SAVE USER</StyledSaveButton>
+				<StyledCancelButton type='button' onClick={handleCancel}>
+					CANCEL
+				</StyledCancelButton>
+			</StyledButtonContainer>
+		</StyledForm>
 	);
 };
 export default EditingPage;
