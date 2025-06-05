@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react';
 import { getAllData } from '../../lib/utils/api.js';
+import {
+	StyledGeneralCardsContainer,
+	StyledUserCard,
+	StyledImageFrame,
+	StyledUserInfoContainer,
+	StyledUserName,
+	StyledUserDataItem,
+	StyledActiveState,
+	StyledDot,
+	StyledActiveText,
+	StyledDetailsButton
+} from './home.styles.js';
 
 const Home = () => {
 	const [users, setUsers] = useState([]);
@@ -8,24 +20,27 @@ const Home = () => {
 		getAllUsers(setUsers);
 	}, []);
 	return (
-		<div>
+		<StyledGeneralCardsContainer>
 			{users.map(user => (
-				<div key={user.userId}>
-					<div>
+				<StyledUserCard key={user.userId}>
+					<StyledImageFrame>
 						<img src={user.profilePicture} />
-					</div>
-					<div>
-						<span>{user.fullName}</span>
-						<span>{user.email}</span>
-						<span>{user.username}</span>
-						<div>
-							<span>{user.status}</span>
-						</div>
-						<button>DETAILS</button>
-					</div>
-				</div>
+					</StyledImageFrame>
+					<StyledUserInfoContainer>
+						<StyledUserName>{user.fullName}</StyledUserName>
+						<StyledUserDataItem>{user.email}</StyledUserDataItem>
+						<StyledUserDataItem>{user.username}</StyledUserDataItem>
+						<StyledActiveState>
+							<StyledDot $active={user.active} />
+							<StyledActiveText $active={user.active}>
+								{user.active ? 'Active' : 'Inactive'}
+							</StyledActiveText>
+						</StyledActiveState>
+						<StyledDetailsButton>DETAILS</StyledDetailsButton>
+					</StyledUserInfoContainer>
+				</StyledUserCard>
 			))}
-		</div>
+		</StyledGeneralCardsContainer>
 	);
 };
 
