@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDataById } from '../../lib/utils/api';
+import { deleteDataById, getDataById } from '../../lib/utils/api';
 import { useParams } from 'react-router-dom';
 import {
 	StyledActiveState,
@@ -27,6 +27,10 @@ const User = () => {
 	useEffect(() => {
 		getUser(setUser, id);
 	}, []);
+
+	const handleDelete = () => {
+		deleteUser(id);
+	};
 
 	return (
 		<StyledGeneralContainer>
@@ -62,7 +66,9 @@ const User = () => {
 				</StyledUserDetails>
 				<StyledEditingButtons>
 					<StyledEditButton>EDIT</StyledEditButton>
-					<StyledDeleteButton>DELETE</StyledDeleteButton>
+					<StyledDeleteButton to={`/`} onClick={handleDelete}>
+						DELETE
+					</StyledDeleteButton>
 				</StyledEditingButtons>
 			</StyledUserCard>
 		</StyledGeneralContainer>
@@ -73,5 +79,10 @@ const getUser = async (setUser, id) => {
 	const user = await getDataById(id);
 	console.log(user);
 	setUser(user);
+};
+
+const deleteUser = async id => {
+	const deletedUser = await deleteDataById(id);
+	console.log(deletedUser);
 };
 export default User;

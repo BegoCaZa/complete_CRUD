@@ -137,7 +137,7 @@ export const StyledEditButton = styled.button`
 	}
 `;
 
-export const StyledDeleteButton = styled.button`
+export const StyledDeleteButton = styled(Link)`
 	appearance: none;
 	background-color: transparent;
 	padding: 8px 16px;
