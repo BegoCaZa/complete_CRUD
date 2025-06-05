@@ -2,27 +2,18 @@ import { useEffect, useState } from 'react';
 import { deleteDataById, getDataById } from '../../lib/utils/api';
 import { useParams } from 'react-router-dom';
 import {
-	StyledActiveState,
-	StyledActiveText,
 	StyledBackButton,
-	StyledDetail,
-	StyledDot,
 	StyledGeneralContainer,
 	StyledImageFrame,
-	StyledUserCard,
-	StyledUserData,
-	StyledUserDataItem,
-	StyledUserDetails,
-	StyledUserInfoContainer,
-	StyledUserName,
-	StyledEditingButtons,
-	StyledDeleteButton,
-	StyledEditButton
+	StyledUserCard
 } from './user.styles';
+import UserData from '../../components/userData/UserData';
+import EditingPage from '../../components/editingPage/EditingPage';
 
 const User = () => {
 	const { id } = useParams();
 	const [user, setUser] = useState([]);
+	const [editingPage, setEditingPage] = useState(false);
 
 	useEffect(() => {
 		getUser(setUser, id);
@@ -39,37 +30,22 @@ const User = () => {
 				<StyledImageFrame>
 					<img src={user.profilePicture} />
 				</StyledImageFrame>
-				<StyledUserInfoContainer>
-					<StyledUserName>{user.fullName}</StyledUserName>
-					<StyledUserDataItem>{user.email}</StyledUserDataItem>
-					<StyledUserDataItem>@{user.username}</StyledUserDataItem>
-				</StyledUserInfoContainer>
-				<StyledUserDetails>
-					<StyledActiveState>
-						<StyledDot $active={user.active} />
-						<StyledActiveText $active={user.active}>
-							{user.active ? 'Active' : 'Inactive'}
-						</StyledActiveText>
-					</StyledActiveState>
-					<StyledDetail>
-						<StyledUserDataItem>Gender:</StyledUserDataItem>
-						<StyledUserData>{user.gender}</StyledUserData>
-					</StyledDetail>
-					<StyledDetail>
-						<StyledUserDataItem>Date of Birth:</StyledUserDataItem>
-						<StyledUserData>{user.dateOfBirth}</StyledUserData>
-					</StyledDetail>
-					<StyledDetail>
-						<StyledUserDataItem>Phone Number:</StyledUserDataItem>
-						<StyledUserData>{user.phoneNumber}</StyledUserData>
-					</StyledDetail>
-				</StyledUserDetails>
-				<StyledEditingButtons>
-					<StyledEditButton>EDIT</StyledEditButton>
-					<StyledDeleteButton to={`/`} onClick={handleDelete}>
-						DELETE
-					</StyledDeleteButton>
-				</StyledEditingButtons>
+				{!editingPage ? (
+					<UserData
+						user={user}
+						setEditingPage={setEditingPage}
+						userId={id}
+						setUser={setUser}
+						handleDelete={handleDelete}
+					/>
+				) : (
+					<EditingPage
+						user={user}
+						setEditingPage={setEditingPage}
+						userId={id}
+						setUser={setUser}
+					/>
+				)}
 			</StyledUserCard>
 		</StyledGeneralContainer>
 	);
