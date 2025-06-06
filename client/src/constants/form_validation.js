@@ -13,14 +13,14 @@ const messages = {
 	},
 	phoneNumber: {
 		required: 'Phone number is required',
-		wrong: 'Phone must be +1 followed by 10 digits'
+		wrong: 'Phone must have 10 digits'
 	}
 };
 
 const patterns = {
 	onlyLettersAndSpaces: /^[A-Za-z\s]+$/,
 	email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-	phoneNumber: /^\+1\d{9}$/
+	phoneNumber: /^\d{10}$/
 };
 
 const fullNameValidations = {

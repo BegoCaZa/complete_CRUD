@@ -6,6 +6,7 @@ export const StyledForm = styled.form`
 	flex-direction: column;
 	gap: 16px;
 	padding: 16px;
+	width: 100%;
 `;
 export const StyledInputContainer = styled.div`
 	display: flex;

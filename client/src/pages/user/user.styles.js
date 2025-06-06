@@ -10,6 +10,11 @@ export const StyledGeneralContainer = styled.div`
 	width: 100%;
 	padding: 20px;
 	gap: 20px;
+
+	@media (min-width: 768px) {
+		width: 50%;
+		margin-inline: auto;
+	}
 `;
 
 export const StyledUserCard = styled.div`
