@@ -45,9 +45,7 @@ const UserData = ({ user, handleDelete, setEditingPage }) => {
 				<StyledEditButton onClick={() => setEditingPage(true)}>
 					EDIT
 				</StyledEditButton>
-				<StyledDeleteButton to={`/`} onClick={handleDelete}>
-					DELETE
-				</StyledDeleteButton>
+				<StyledDeleteButton onClick={handleDelete}>DELETE</StyledDeleteButton>
 			</StyledEditingButtons>
 		</>
 	);

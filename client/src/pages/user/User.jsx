@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { deleteDataById, getDataById } from '../../lib/utils/api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
 	StyledBackButton,
 	StyledGeneralContainer,
@@ -14,13 +14,18 @@ const User = () => {
 	const { id } = useParams();
 	const [user, setUser] = useState([]);
 	const [editingPage, setEditingPage] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getUser(setUser, id);
-	}, []);
+	}, [id]);
+
+	if (!user) {
+		return <h2>No user</h2>;
+	}
 
 	const handleDelete = () => {
-		deleteUser(id);
+		deleteUser(id, navigate);
 	};
 
 	return (
@@ -57,8 +62,9 @@ const getUser = async (setUser, id) => {
 	setUser(user);
 };
 
-const deleteUser = async id => {
+const deleteUser = async (id, navigate) => {
 	const deletedUser = await deleteDataById(id);
+	navigate('/');
 	console.log(deletedUser);
 };
 export default User;

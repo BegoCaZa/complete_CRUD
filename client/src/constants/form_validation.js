@@ -20,7 +20,7 @@ const messages = {
 const patterns = {
 	onlyLettersAndSpaces: /^[A-Za-z\s]+$/,
 	email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-	phoneNumber: /^\+1\d{10}$/
+	phoneNumber: /^\+1\d{9}$/
 };
 
 const fullNameValidations = {

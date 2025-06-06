@@ -11,14 +11,13 @@ import {
 	StyledSaveButton
 } from './editingPage.styles';
 import { FORM_VALIDATIONS } from '../../constants/form_validation';
+import { updateDataById } from '../../lib/utils/api';
 
 const EditingPage = ({ user, setUser, setEditingPage, userId }) => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-		setValue
-		//el setValue para que?
+		formState: { errors }
 	} = useForm({
 		defaultValues: {
 			fullName: user.fullName,
@@ -29,8 +28,12 @@ const EditingPage = ({ user, setUser, setEditingPage, userId }) => {
 		}
 	});
 
-	const onSubmit = data => {
-		console.log(data);
+	//aqui valido y espero la info
+	const onSubmit = async data => {
+		const updatedUser = await updateDataById(userId, data); //le mando esta info
+		setUser(updatedUser);
+		setEditingPage(false); //cierra el editor
+		console.log(updatedUser);
 		//guarda pero no actualiza el api
 	};
 

@@ -15,10 +15,17 @@ import {
 
 const Home = () => {
 	const [users, setUsers] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		getAllUsers(setUsers);
+		getAllUsers(setUsers, setLoading, setError);
 	}, []);
+
+	if (loading) return <h2>Loading...</h2>;
+	if (error) return <h2>Something Went Wrong!</h2>;
+	if (users.length === 0) return <h2>No users</h2>;
+
 	return (
 		<StyledGeneralCardsContainer>
 			{users.map(user => (
@@ -46,10 +53,15 @@ const Home = () => {
 	);
 };
 
-const getAllUsers = async setUsers => {
-	const users = await getAllData();
-	console.log(users);
-	setUsers(users);
+const getAllUsers = async (setUsers, setLoading, setError) => {
+	try {
+		const users = await getAllData();
+		setLoading(false);
+		setUsers(users);
+	} catch {
+		setLoading(false);
+		setError(error);
+	}
 };
 
 export default Home;
