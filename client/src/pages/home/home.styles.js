@@ -10,6 +10,18 @@ export const StyledGeneralCardsContainer = styled.div`
 	width: 100%;
 	padding: 20px;
 	gap: 20px;
+
+	@media (min-width: 768px) {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 40px;
+	}
+
+	@media (min-width: 1400px) {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 40px;
+	}
 `;
 
 export const StyledUserCard = styled.div`
@@ -31,6 +43,11 @@ export const StyledImageFrame = styled.div`
 	height: 120px;
 	border-radius: 50%;
 	overflow: hidden;
+
+	@media (min-width: 768px) {
+		width: 150px;
+		height: 150px;
+	}
 `;
 
 export const StyledUserInfoContainer = styled.div`
